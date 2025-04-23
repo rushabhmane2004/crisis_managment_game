@@ -1,0 +1,117 @@
+/* PolicyGovernance.css */
+.policy-governance {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.scenario-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.scenario-prompt {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.scenario-prompt p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.policy-input-container {
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  resize: vertical;
+  min-height: 200px;
+  font-family: 'Arial', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.word-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(255,255,255,0.9);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.score-meter {
+  height: 25px;
+  background: #e9ecef;
+  border-radius: 12px;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.score-meter div {
+  height: 100%;
+  background: #4CAF50;
+  text-align: right;
+  padding-right: 10px;
+  color: white;
+  font-weight: bold;
+  transition: width 0.5s ease;
+}
+
+.score-details {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.score-details div {
+  display: flex;
+  gap: 1rem;
+}
+
+.submit-btn {
+  display: block;
+  margin: 2rem auto;
+  background: #2c3e50;
+  color: white;
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+}
+
+.submit-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.final-results {
+  text-align: center;
+  padding: 2rem;
+  background: #f1faee;
+  border-radius: 10px;
+  margin-top: 2rem;
+}
+
+.total-score {
+  font-size: 2rem;
+  color: #1d3557;
+  margin: 1rem 0;
+  font-weight: bold;
+}

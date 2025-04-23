@@ -1,0 +1,90 @@
+.policy-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  min-height: 80vh;
+}
+
+.error-banner {
+  background: #ffebee;
+  color: #c62828;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.scenario-box {
+  background: #e3f2fd;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.policy-input-section {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.policy-input-section textarea {
+  width: 100%;
+  padding: 1.2rem;
+  border: 2px solid #90caf9;
+  border-radius: 8px;
+  min-height: 200px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.counter-row {
+  text-align: right;
+  color: #616161;
+  margin-top: 0.5rem;
+}
+
+.eval-button {
+  background: #1976d2;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.score-card {
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.score-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-score {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2e7d32;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.next-button {
+  background: #388e3c;
+  color: white;
+  margin-top: 1.5rem;
+}

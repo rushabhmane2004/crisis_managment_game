@@ -1,0 +1,29 @@
+.multiplayer-page {
+    text-align: center;
+    background-color: #121212;
+    color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .header {
+    width: 100%;
+    padding: 20px;
+    background: #43546c;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+    color: #a970ff;
+  }
+  
+  .back-button {
+    padding: 10px;
+    background: #00246B;
+    color: #CADCFC;
+    border: 2px solid #001A4D;
+    cursor: pointer;
+  }
+  

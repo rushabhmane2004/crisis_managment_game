@@ -1,0 +1,278 @@
+/* Import Orbitron Font */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+/* General Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #0f172a;
+  color: #fff;
+  text-align: center;
+  overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+}
+
+/* Container - Fully Occupies Screen */
+.homepage {
+  width: 100%;
+  max-width: 1920px; /* Optimized for 1920x1080 */
+  margin: auto;
+  min-height: 100vh; /* Ensures it fully occupies the screen */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Pushes content to fill screen */
+}
+
+/* 🔹 Top Section (10%) - Rounded Edges */
+.top-gradient {
+  width: 100%;
+  height: 10vh;
+  background: #43546c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+/* 🔹 Header - Website Name & Links */
+.header {
+  position: absolute;
+  top: 0;
+  width: 90%;
+  height: 10vh;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+/* 🔹 Updated Game Name - Risk Forge */
+.game-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffd13a; /* Main Text Color */
+  font-family: "Orbitron", sans-serif;
+  text-shadow: 
+    4px 4px 10px rgba(0, 0, 0, 1),   /* Purple Glow */
+    4px 4px 10px rgba(0, 0, 0, 0.7),  /* Cyan Glow */
+    6px 6px 15px rgba(0, 0, 0, 1);  /* Yellow Glow */
+}
+
+/* 🔹 Navigation Buttons Layout */
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+/* 🎯 Scoring Rule, Leaderboard & Share Buttons */
+.scoring-rule, .leaderboard, .share-button {
+  padding: 8px 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  background: #604ce2; 
+  color: #ffffff; 
+  border: 2px solid #43359e; 
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  border-bottom: 4px solid #43359e;
+  margin-top: 4px;
+}
+
+.scoring-rule:hover, .leaderboard:hover, .share-button:hover {
+  background-color: #a094ee; /* ✅ Only background changes */
+}
+
+.scoring-rule:active, .leaderboard:active, .share-button:active {
+  background-color: #00246B;
+}
+
+.scoring-rule:disabled, .leaderboard:disabled, .share-button:disabled {
+  background: #bdbdbd;
+  color: #e0e0e0;
+  border: 2px solid #9e9e9e;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* 🔹 Ultra-Thin Full-Width Separator Lines */
+.top-divider, .divider, .divider-modes {
+  width: 98%;
+  border: 1.5px solid #39c6bf81;
+  margin: 8px auto;
+}
+
+/* 🔹 Crisis Image Section */
+.fire-image-section {
+  width: 98%;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.fire-image-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* 🔹 Animated Title */
+.game-title {
+  font-size: 3rem;
+  font-weight: 900;
+  animation: fadeInDown 1s ease-in-out;
+  text-shadow: 2px 2px 8px #e0569d; /* 🔹 Add shadow effect */
+}
+
+/* 🔥 Updated Tagline */
+.tagline {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e0569d;
+  animation: fadeInUp 1.2s ease-in-out;
+  transition: color 0.3s ease-in-out;
+}
+
+/* When hovered, apply the CRAZY ANIMATION */
+.tagline:hover {
+  animation: crazyWobble 0.6s ease-in-out infinite alternate;
+  color: #39c6bf;
+}
+
+/* 🔹 Game Modes Title */
+.game-modes-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* 🔹 Game Modes Layout - Responsive */
+.game-modes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 90%;
+  max-width: 1400px;
+  margin-bottom: 50px;
+}
+
+/* 🎮 Game Mode Buttons - Updated with Bounce Animation */
+.game-button {
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 12px;
+  border: 2px solid #fcc404; /* Thin yellow border */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: #344454;
+  color: #ffffff;
+  transition: all 0.1s ease-in-out;
+}
+
+/* ✅ Added Login Button Styles */
+.login-button {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 12px;
+  background: #007bff;
+  color: white;
+  border: 2px solid #0056b3;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+/* ✅ Ensuring Nav Buttons Align Properly */
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+/* 🔥 Fixed Hover Issue: Button Returns to Original State */
+.game-button:hover {
+  border-color: #000000;
+  background-color: #007bff;
+  transform: translateY(5px);
+  transition: transform 0s ease-in-out, background-color 0s ease-in-out;
+}
+
+/* ⬇️ When cursor leaves, button returns to its original state */
+.game-button:not(:hover) {
+  transform: translateY(0);
+  background-color: #344454;
+  transition: transform 0.0001s ease-in-out, background-color 0.00001s ease-in-out;
+}
+
+/* 🟡 Click Effect */
+.game-button:active {
+  transform: scale(0.1);
+}
+
+/* 🚫 Disabled State */
+.game-button:disabled {
+  background: #bdbdbd;
+  color: #e0e0e0;
+  border: 1px solid #9e9e9e;
+  cursor: not-allowed;
+}
+
+/* 🔥 Keyframe Animations */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🔥 Crazy Wobble Animation for Tagline */
+@keyframes crazyWobble {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-3deg) scale(1.05);
+  }
+  50% {
+    transform: rotate(3deg) scale(1.1);
+  }
+  75% {
+    transform: rotate(-3deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
