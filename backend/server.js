@@ -113,7 +113,15 @@ const generateAIQuestions = async () => {
         const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
         console.log(`🔹 Selected Scenario: ${randomScenario}`);
 
-        const prompt = `Generate 5 multiple-choice quiz questions related to a ${randomScenario} scenario. Each question should have exactly four answer options that are very similar to each other, making it challenging for the user to choose. Format them clearly.`;
+        const prompt = `Generate 5 multiple-choice quiz questions related to a ${randomScenario} scenario. Each question should have exactly four answer options that are very similar to each other, making it challenging for the user to choose. Format them clearly and consistently, for example:
+
+Question 1: What should you do in this situation?
+A) Option one
+B) Option two
+C) Option three
+D) Option four
+
+Follow this structure for all 5 questions.`;
 
         const response = await axios.post(
             `https://generativelanguage.googleapis.com/v1/${MODEL_NAME}:generateContent?key=${API_KEY}`,
@@ -133,14 +141,17 @@ const generateAIQuestions = async () => {
         const lines = generatedText.split("\n").map(line => line.trim()).filter(line => line !== "");
 
         let questions = [];
-        let currentQuestion = null;
+        let currentQuestion = "";
         let options = [];
 
         for (const line of lines) {
-            if (line.includes("?")) {
+            const questionMatch = line.match(/^Question\s*\d*[:.]?\s*(.*\?)$/i);
+            const optionMatch = line.match(/^[A-Da-d][).:-]\s*(.*)/);
+
+            if (questionMatch) {
                 if (currentQuestion && options.length === 4) {
                     questions.push({
-                        question: currentQuestion.trim(),
+                        question: currentQuestion,
                         optionA: options[0],
                         optionB: options[1],
                         optionC: options[2],
@@ -153,16 +164,16 @@ const generateAIQuestions = async () => {
                         ]
                     });
                 }
-                currentQuestion = line;
+                currentQuestion = questionMatch[1];
                 options = [];
-            } else {
-                options.push(line);
+            } else if (optionMatch) {
+                options.push(optionMatch[1]);
             }
         }
 
         if (currentQuestion && options.length === 4) {
             questions.push({
-                question: currentQuestion.trim(),
+                question: currentQuestion,
                 optionA: options[0],
                 optionB: options[1],
                 optionC: options[2],
@@ -174,6 +185,10 @@ const generateAIQuestions = async () => {
                     { text: options[3], points: -5 }
                 ]
             });
+        }
+
+        if (questions.length < 5) {
+            console.warn(`⚠️ Only ${questions.length} questions parsed. Expected 5.`);
         }
 
         cachedQuestions = { scenario: `AI-generated ${randomScenario} scenario`, questions };
