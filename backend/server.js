@@ -217,3 +217,97 @@ app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
 
+const SINGLE_PLAYER_API_KEY = "AIzaSyA7Q3yfldIOAeGg0dLZv_nWczJl8xmzD6s"; // 👈 Different API key
+
+const generateSinglePlayerQuestions = async () => {
+    try {
+        console.log("🎯 Generating AI questions for Single Player...");
+
+        const now = Date.now();
+
+        if (cachedQuestions && now - lastRequestTime < CACHE_DURATION) {
+            console.log("⚡ Using cached AI-generated questions (Single Player).");
+            return cachedQuestions;
+        }
+
+        const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+        const prompt = `Generate 5 multiple-choice quiz questions related to a ${randomScenario} scenario. Each question should have exactly four similar answer options. Format them like:
+
+Question 1: What should you do in this situation?
+A) Option one
+B) Option two
+C) Option three
+D) Option four`;
+
+        const response = await axios.post(
+            `https://generativelanguage.googleapis.com/v1/${MODEL_NAME}:generateContent?key=${SINGLE_PLAYER_API_KEY}`,
+            {
+                contents: [
+                    {
+                        role: "user",
+                        parts: [{ text: prompt }]
+                    }
+                ]
+            }
+        );
+
+        const generatedText = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "No questions generated.";
+        const lines = generatedText.split("\n").map(line => line.trim()).filter(Boolean);
+
+        let questions = [];
+        let currentQuestion = "";
+        let options = [];
+
+        for (const line of lines) {
+            const questionMatch = line.match(/^Question\s*\d*[:.]?\s*(.*\?)$/i);
+            const optionMatch = line.match(/^[A-Da-d][).:-]\s*(.*)/);
+
+            if (questionMatch) {
+                if (currentQuestion && options.length === 4) {
+                    questions.push({
+                        question: currentQuestion,
+                        options: [
+                            { text: options[0], points: 10 },
+                            { text: options[1], points: 5 },
+                            { text: options[2], points: 0 },
+                            { text: options[3], points: -5 }
+                        ]
+                    });
+                }
+                currentQuestion = questionMatch[1];
+                options = [];
+            } else if (optionMatch) {
+                options.push(optionMatch[1]);
+            }
+        }
+
+        if (currentQuestion && options.length === 4) {
+            questions.push({
+                question: currentQuestion,
+                options: [
+                    { text: options[0], points: 10 },
+                    { text: options[1], points: 5 },
+                    { text: options[2], points: 0 },
+                    { text: options[3], points: -5 }
+                ]
+            });
+        }
+
+        cachedQuestions = { scenario: `AI-generated ${randomScenario} scenario`, questions };
+        lastRequestTime = Date.now();
+
+        return cachedQuestions;
+    } catch (error) {
+        console.error("❌ Single Player AI Error:", error.response?.data || error.message);
+        throw new Error("Failed to generate single player questions.");
+    }
+};
+
+app.post("/api/singleplayer/questions", authenticateToken, async (req, res) => {
+    try {
+        const aiQuestions = await generateSinglePlayerQuestions();
+        res.status(200).json(aiQuestions);
+    } catch (error) {
+        res.status(500).json({ error: error.message || "Failed to fetch Single Player questions." });
+    }
+});
