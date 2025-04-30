@@ -4,6 +4,8 @@ const axios = require("axios");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
 const jwt = require("jsonwebtoken");
+const multiplayerRooms = {}; // roomId -> { players: { username: score }, scenario }
+
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 

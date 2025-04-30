@@ -1,29 +1,40 @@
+/* Multiplayer Page */
 .multiplayer-page {
-    text-align: center;
-    background-color: #121212;
-    color: white;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .header {
-    width: 100%;
-    padding: 20px;
-    background: #43546c;
-  }
-  
-  .page-title {
-    font-size: 2.5rem;
-    color: #a970ff;
-  }
-  
-  .back-button {
-    padding: 10px;
-    background: #00246B;
-    color: #CADCFC;
-    border: 2px solid #001A4D;
-    cursor: pointer;
-  }
-  
+  text-align: center;
+  background-color: #121212; /* Dark background */
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centers the content vertically */
+}
+
+.header {
+  width: 100%;
+  padding: 20px;
+  background: #2a3d53; /* Lighter background for header */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Soft shadow for the header */
+}
+
+.page-title {
+  font-size: 2.5rem;
+  color: #a970ff; /* Purple color for title */
+  margin: 0;
+  font-family: "Orbitron", sans-serif; /* Modern font */
+}
+
+.back-button {
+  padding: 10px 20px;
+  background: #00246B; /* Dark blue for the button */
+  color: #CADCFC; /* Light color for text */
+  border: 2px solid #001A4D;
+  cursor: pointer;
+  border-radius: 8px; /* Rounded corners for a smooth button */
+  font-size: 1.1rem;
+  transition: background 0.3s ease; /* Smooth transition on hover */
+}
+
+.back-button:hover {
+  background: #001A4D; /* Darker shade on hover */
+}

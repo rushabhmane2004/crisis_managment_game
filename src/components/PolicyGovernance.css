@@ -1,10 +1,12 @@
-/* PolicyGovernance.css - Using your custom dark theme palette */
-
+/* PolicyGovernance.css - Updated for Dark Theme without Timeline */
 .policy-container {
   max-width: 900px;
   margin: 2rem auto;
   padding: 1rem;
   min-height: 80vh;
+  background-color: #1e293b; /* Dark background */
+  border-radius: 16px;
+  color: #e2e8f0;
 }
 
 .scenario-box {

@@ -1,28 +1,33 @@
-/* PolicyGovernance.css */
+/* PolicyGovernance.css - Updated for Single Player UI consistency */
 .policy-governance {
   max-width: 800px;
   margin: 2rem auto;
-  padding: 1rem;
+  padding: 1.5rem;
+  background-color: #1e293b; /* Matches dark background */
+  border-radius: 16px;
+  color: #e2e8f0;
 }
 
 .scenario-card {
-  background: #fff;
-  border-radius: 10px;
+  background: #0f172a;
+  border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .scenario-prompt {
-  background: #f8f9fa;
+  background: #1e293b;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 10px;
+  border: 1px solid #334155;
   margin: 1rem 0;
 }
 
 .scenario-prompt p {
   margin: 0.5rem 0;
   line-height: 1.6;
+  color: #f1f5f9;
 }
 
 .policy-input-container {
@@ -33,8 +38,10 @@
 textarea {
   width: 100%;
   padding: 1rem;
-  border: 2px solid #dee2e6;
-  border-radius: 8px;
+  border: 2px solid #334155;
+  border-radius: 10px;
+  background-color: #0f172a;
+  color: #e2e8f0;
   resize: vertical;
   min-height: 200px;
   font-family: 'Arial', sans-serif;
@@ -46,27 +53,27 @@ textarea {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background: rgba(255,255,255,0.9);
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  color: #666;
+  background: rgba(15, 23, 42, 0.9);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #94a3b8;
 }
 
 .score-meter {
   height: 25px;
-  background: #e9ecef;
-  border-radius: 12px;
+  background: #334155;
+  border-radius: 14px;
   margin: 1rem 0;
   overflow: hidden;
 }
 
 .score-meter div {
   height: 100%;
-  background: #4CAF50;
+  background: #39c6bf;
   text-align: right;
   padding-right: 10px;
-  color: white;
+  color: #0f172a;
   font-weight: bold;
   transition: width 0.5s ease;
 }
@@ -76,6 +83,7 @@ textarea {
   justify-content: space-between;
   gap: 1rem;
   margin-top: 1rem;
+  color: #f1f5f9;
 }
 
 .score-details div {
@@ -86,32 +94,41 @@ textarea {
 .submit-btn {
   display: block;
   margin: 2rem auto;
-  background: #2c3e50;
-  color: white;
+  background: #ffd13a;
+  color: #0f172a;
   padding: 1rem 3rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 1.1rem;
-  transition: all 0.3s;
+  font-weight: bold;
+  box-shadow: 0 0 10px #ffd13a;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #ffcb05;
 }
 
 .submit-btn:disabled {
   background: #6c757d;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .final-results {
   text-align: center;
   padding: 2rem;
-  background: #f1faee;
-  border-radius: 10px;
+  background: #1e293b;
+  border-radius: 12px;
   margin-top: 2rem;
+  color: #e2e8f0;
+  box-shadow: 0 0 12px rgba(255, 209, 58, 0.2);
 }
 
 .total-score {
-  font-size: 2rem;
-  color: #1d3557;
+  font-size: 2.2rem;
+  color: #ffd13a;
   margin: 1rem 0;
   font-weight: bold;
 }
