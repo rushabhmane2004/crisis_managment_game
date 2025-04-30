@@ -13,17 +13,18 @@ const SinglePlayer = () => {
   const [showScore, setShowScore] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [readyToRender, setReadyToRender] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      setReadyToRender(false);
       try {
         const generated = await fetchSinglePlayerQuestions();
-        if (generated.questions && generated.questions.length > 0) {
+        if (generated.questions?.length > 0) {
           setScenario(generated.scenario || "No scenario available.");
           setQuestions(generated.questions);
-        } else {
-          console.warn("⚠️ No questions received.");
+          setReadyToRender(true);
         }
       } catch (error) {
         console.error("❌ Error fetching questions:", error);
@@ -31,20 +32,18 @@ const SinglePlayer = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
   const handleAnswer = (option) => {
     if (!option || typeof option.points !== "number") return;
-
-    const newSelected = [...selectedOptions, option.points];
-    setSelectedOptions(newSelected);
+    const updated = [...selectedOptions, option.points];
+    setSelectedOptions(updated);
 
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      const finalScore = newSelected.reduce((sum, p) => sum + p, 0);
+      const finalScore = updated.reduce((sum, val) => sum + val, 0);
       setTotalScore(finalScore);
       setShowScore(true);
       saveScore(finalScore);
@@ -59,22 +58,22 @@ const SinglePlayer = () => {
         score,
       });
     } catch (err) {
-      console.error("❌ Error updating score:", err.response?.data || err.message);
+      console.error("❌ Error saving score:", err.response?.data || err.message);
     }
   };
 
   return (
-    <div className="multiplayer-page">
+    <div className="multiplayer-page full-height">
       <header className="header">
         <h1 className="page-title">Single Player Mode</h1>
-        <button className="back-button" onClick={() => navigate("/")}>Back to Home</button>
+        <button className="back-button" onClick={() => navigate("/")}>
+          Back to Home
+        </button>
       </header>
 
       <div className="content">
-        {loading ? (
+        {loading || questions.length === 0 ? (
           <p>Loading questions...</p>
-        ) : questions.length === 0 ? (
-          <p>No questions available.</p>
         ) : showScore ? (
           <div className="score-container">
             <h2>Your Final Score: {totalScore}</h2>
@@ -99,6 +98,25 @@ const SinglePlayer = () => {
                   >
                     {opt.text || "Option"}
                   </button>
+                ))}
+              </div>
+
+              {/* ✅ Enhanced Timeline */}
+              <div className="milestone-timeline">
+                {questions.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`milestone-step ${
+                      index < currentQuestionIndex
+                        ? "completed"
+                        : index === currentQuestionIndex
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    <div className="milestone-dot"></div>
+                    
+                  </div>
                 ))}
               </div>
             </div>

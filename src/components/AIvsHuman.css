@@ -27,3 +27,25 @@
     cursor: pointer;
   }
   
+  .score-bar {
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .human-score {
+    background-color: #2196f3;
+    color: white;
+    padding: 0.5rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .ai-score {
+    background-color: #f44336;
+    color: white;
+    padding: 0.5rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  

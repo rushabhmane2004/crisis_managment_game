@@ -34,3 +34,70 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* === Progress Timeline === */
+.progress-timeline {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 10px;
+}
+
+.timeline-step {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #999;
+  opacity: 0.4;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid #333;
+}
+
+.timeline-step.completed {
+  background: #39c6bf;
+  opacity: 0.9;
+}
+
+.timeline-step.active {
+  background: #ffd13a;
+  opacity: 1;
+  box-shadow: 0 0 8px #ffd13a;
+}
+
+/* Ensures the page fills screen */
+.full-height {
+  min-height: 100vh;
+  background-color: #0f172a;
+}
+
+/* Timeline Styling */
+.timeline-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #5c6c7e;
+  transition: all 0.3s ease;
+  border: 2px solid #344454;
+  opacity: 0.5;
+}
+
+.timeline-dot.completed {
+  background-color: #39c6bf;
+  opacity: 1;
+  box-shadow: 0 0 6px #39c6bf;
+}
+
+.timeline-dot.active {
+  background-color: #ffd13a;
+  opacity: 1;
+  transform: scale(1.2);
+  box-shadow: 0 0 10px #ffd13a;
+}

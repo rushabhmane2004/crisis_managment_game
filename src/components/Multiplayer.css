@@ -99,3 +99,72 @@
 .option-button:hover {
   background: #646cff;
 }
+
+/* Ensures the page fills screen */
+.full-height {
+  min-height: 100vh;
+  background-color: #0f172a;
+}
+
+/* === Modern Timeline Bar Based on Image === */
+.milestone-timeline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.milestone-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.milestone-dot {
+  width: 22px;
+  height: 22px;
+  background: #5c6c7e;
+  border: 5px solid #90caf9;
+  border-radius: 50%;
+  z-index: 1;
+  transition: all 0.3s ease-in-out;
+}
+
+.milestone-step.completed .milestone-dot {
+  background: #39c6bf;
+  border-color: #39c6bf;
+}
+
+.milestone-step.active .milestone-dot {
+  background: #ffd13a;
+  border-color: #ffd13a;
+  box-shadow: 0 0 10px #ffd13a;
+  transform: scale(1.1);
+}
+
+.milestone-label {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.milestone-step::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 28px;
+  width: 40px;
+  height: 2px;
+  border-top: 2px dotted #888;
+}
+
+.milestone-step:last-child::after {
+  content: none;
+}
+
