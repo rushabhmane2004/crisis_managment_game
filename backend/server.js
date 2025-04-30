@@ -214,7 +214,8 @@ app.post("/api/multiplayer/questions", authenticateToken, async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
+
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
@@ -681,5 +682,10 @@ app.post("/api/ai_vs_crisis/questions", authenticateToken, async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message || "Failed to fetch AI vs Human questions." });
   }
+});
+
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
 });
 
