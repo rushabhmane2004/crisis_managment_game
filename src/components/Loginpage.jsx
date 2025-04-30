@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./loginpage.css";
+import "./Loginpage.css";
 
 export default function LoginPage({ setIsAuthenticated }) {
   const navigate = useNavigate();
