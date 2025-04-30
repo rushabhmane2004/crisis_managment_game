@@ -39,22 +39,18 @@ const Multiplayer = () => {
       return;
     }
 
-    // ✅ Append the selected option points
     setSelectedOptions((prev) => [...prev, option.points]);
 
-    // ✅ Move to next question if available
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-    // ✅ Last question answered
-    else {
+    } else {
       const finalScore = [...selectedOptions, option.points].reduce(
         (sum, p) => sum + p,
         0
       );
       setTotalScore(finalScore);
       setShowScore(true);
-      saveScore(finalScore); // ✅ Save score when all answered
+      saveScore(finalScore);
     }
   };
 
@@ -84,7 +80,7 @@ const Multiplayer = () => {
         <h2 className="scenario-text">{scenario}</h2>
 
         {loading ? (
-          <p>Loading questions...</p>
+          <div className="loading-spinner"></div>
         ) : !showScore ? (
           <div className="question-block">
             {questions.length > 0 ? (

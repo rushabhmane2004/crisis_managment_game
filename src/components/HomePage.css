@@ -37,7 +37,7 @@ body {
   border-bottom-right-radius: 20px;
 }
 
-/* 🔹 Header - Website Name & Links */
+/* 🔹 Header - Website Name & Character Box */
 .header {
   position: absolute;
   top: 0;
@@ -50,17 +50,19 @@ body {
   z-index: 10;
 }
 
-/* 🔹 Updated Game Name - Risk Forge */
+/* 🔹 Game Name */
 .game-name {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #ffd13a; /* Main Text Color */
+  color: #ffd13a;
   font-family: "Orbitron", sans-serif;
   text-shadow: 
-    4px 4px 10px rgba(0, 0, 0, 1),   /* Purple Glow */
-    4px 4px 10px rgba(0, 0, 0, 0.7),  /* Cyan Glow */
-    6px 6px 15px rgba(0, 0, 0, 1);  /* Yellow Glow */
+    4px 4px 10px rgba(0, 0, 0, 1),
+    4px 4px 10px rgba(0, 0, 0, 0.7),
+    6px 6px 15px rgba(0, 0, 0, 1);
+  display: inline-block;
 }
+
 
 /* 🔹 Navigation Buttons Layout */
 .nav-links {
@@ -274,5 +276,45 @@ body {
   }
   100% {
     transform: rotate(0deg) scale(1);
+  }
+}
+
+/* 🔹 Character Box - Positioned Right Next to the Game Name */
+.character-box {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffd700;
+  background-color: #1f2937;
+  padding: 6px 16px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  display: inline-block;
+  margin-left: 15px;  /* Adds space between the game name and the character box */
+}
+
+/* 🔹 Inline Character Name */
+.inline-character-name {
+  font-size: 1.2rem;
+  color: #00d9ff;
+  font-weight: 600;
+}
+
+/* Welcome message fade out effect */
+.welcome-message {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffd700;
+  background-color: #1f2937;
+  padding: 10px;
+  border-radius: 10px;
+  animation: fadeOut 4s forwards; /* Animation to fade out */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
