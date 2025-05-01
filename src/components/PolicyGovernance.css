@@ -1,144 +1,170 @@
-/* PolicyGovernance.css - Updated for Dark Theme without Timeline */
+/* Container around everything */
 .policy-container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 2rem auto;
-  padding: 1rem;
-  min-height: 80vh;
-  background-color: #1e293b; /* Dark background */
+  padding: 2rem;
+  background-color: #1e293b;
   border-radius: 16px;
   color: #e2e8f0;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
 }
 
+/* Horizontal layout */
+.policy-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+/* Left Box: Scenario */
 .scenario-box {
-  background: #162f65;
-  border-radius: 12px;
+  width: 40%;
+  background-color: #162f65;
   padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
 .scenario-title {
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: bold;
+  margin-bottom: 1rem;
   color: #e8c766;
   font-family: "Orbitron", sans-serif;
-  margin-bottom: 1rem;
   text-shadow: 1px 1px 8px #000;
 }
 
+.scenario-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: #f1f5f9;
+}
+
+/* Right Box: Textarea and Button */
 .policy-input-section {
-  position: relative;
-  margin-bottom: 2rem;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
 }
 
 .policy-textarea {
   width: 100%;
-  padding: 1.5rem;
-  border: 2px solid #3361ac;
-  border-radius: 12px;
   min-height: 200px;
+  padding: 1.2rem;
   font-size: 1rem;
-  background: #0f2043;
+  border-radius: 12px;
+  border: 2px solid #3361ac;
+  background-color: #0f2043;
   color: #e7e6dd;
   resize: vertical;
-  line-height: 1.6;
-  transition: border 0.3s ease;
-}
-
-.policy-textarea:focus {
-  border-color: #e8c766;
-  outline: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .counter-row {
   text-align: right;
-  color: #ccc;
   margin-top: 0.5rem;
+  color: #ccc;
   font-size: 0.9rem;
 }
 
+/* Submit button */
 .eval-button {
-  background: #3361ac;
-  color: white;
-  padding: 1rem 2rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #3361ac;
   border: none;
   border-radius: 12px;
-  font-size: 1.2rem;
   font-family: "Orbitron", sans-serif;
   cursor: pointer;
-  margin-top: 1.5rem;
-  width: 100%;
-  transition: background 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .eval-button:hover {
-  background: #0f2043;
+  background-color: #27457a;
 }
 
+/* Evaluation result section */
 .score-card {
-  background: #0f2043;
-  border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
-  animation: fadeIn 0.5s ease-in;
+  background-color: #0f2043;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  color: #e2e8f0;
+}
+
+.score-card h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-family: "Orbitron", sans-serif;
+  color: #fbbf24;
 }
 
 .score-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin: 1.5rem 0;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .score-item {
-  background: #162f65;
-  padding: 1rem;
-  border-radius: 12px;
-  font-size: 1.1rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  color: #e7e6dd;
+  background-color: #1e3a8a;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1.1rem;
 }
 
 .total-score {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-weight: bold;
-  color: #e0569d;
-  text-align: center;
-  margin-top: 1rem;
-  text-shadow: 1px 1px 6px #e0569d;
+  margin-bottom: 1rem;
+  color: #22c55e;
 }
 
 .evaluation-summary {
-  margin-top: 1.5rem;
-  font-size: 1.2rem;
-  color: #e7e6dd;
-  text-align: center;
-  line-height: 1.5;
+  font-size: 1rem;
+  margin-top: 1rem;
+  background-color: #1e293b;
+  padding: 1rem;
+  border-radius: 10px;
+  line-height: 1.6;
 }
 
+/* Button after evaluation */
 .next-button {
-  background: #e8c766;
-  color: #0f2043;
   margin-top: 2rem;
   padding: 1rem 2rem;
   font-size: 1.1rem;
+  background-color: #2563eb;
+  color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: 600;
-  transition: background 0.3s;
+  font-family: "Orbitron", sans-serif;
+  transition: background-color 0.3s;
 }
 
 .next-button:hover {
-  background: #e0569d;
-  color: #fff;
+  background-color: #1e40af;
 }
 
-/* Fade-in Animation */
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
+/* Responsive layout for mobile */
+@media (max-width: 768px) {
+  .policy-grid {
+    flex-direction: column;
+  }
+
+  .scenario-box,
+  .policy-input-section {
+    width: 100%;
+  }
+
+  .score-grid {
+    grid-template-columns: 1fr;
+  }
 }

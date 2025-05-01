@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchSinglePlayerQuestions } from "./services/aiQuestionService";
 import axios from "axios";
+import "./SinglePlayer.css";
 import "./Multiplayer.css";
-
 const SinglePlayer = () => {
   const navigate = useNavigate();
   const [scenario, setScenario] = useState("");

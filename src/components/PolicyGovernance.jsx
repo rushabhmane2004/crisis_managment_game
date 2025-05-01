@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchPolicyGovernanceQuestions } from "./services/aiQuestionService";
 import axios from "axios";
-import "./Multiplayer.css"; // Reuse CSS
-import "./PolicyGovernance.css"; // ✅ Import new beautiful styles
+import "./Multiplayer.css";
+import "./PolicyGovernance.css";
 
 const PolicyGovernance = () => {
   const navigate = useNavigate();
@@ -51,7 +51,9 @@ const PolicyGovernance = () => {
     <div className="multiplayer-page">
       <header className="header">
         <h1 className="page-title">Policy & Governance Mode</h1>
-        <button className="back-button" onClick={() => navigate("/")}>Back to Home</button>
+        <button className="back-button" onClick={() => navigate("/")}>
+          Back to Home
+        </button>
       </header>
 
       <div className="content policy-container">
@@ -59,27 +61,30 @@ const PolicyGovernance = () => {
           <p>Loading scenario...</p>
         ) : (
           <>
-            <div className="scenario-box">
-              <h2 className="scenario-title">Scenario</h2>
-              <p className="scenario-text">{scenario}</p>
-            </div>
-
             {!evaluation ? (
-              <div className="policy-input-section">
-                <textarea
-                  className="policy-textarea"
-                  rows="10"
-                  value={policyText}
-                  onChange={(e) => setPolicyText(e.target.value)}
-                  placeholder="Write your policy decision here..."
-                />
-                <div className="counter-row">
-                  {policyText.length}/300 words
+              <div className="policy-grid">
+                {/* Left: AI Scenario */}
+                <div className="scenario-box">
+                  <h2 className="scenario-title">Scenario</h2>
+                  <p className="scenario-text">{scenario}</p>
                 </div>
 
-                <button className="eval-button" onClick={handleSubmit}>
-                  Submit Policy for Evaluation
-                </button>
+                {/* Right: Input and Submit */}
+                <div className="policy-input-section">
+                  <textarea
+                    className="policy-textarea"
+                    rows="10"
+                    value={policyText}
+                    onChange={(e) => setPolicyText(e.target.value)}
+                    placeholder="Write your policy decision here..."
+                  />
+                  <div className="counter-row">
+                    {policyText.trim().split(/\s+/).length}/300 words
+                  </div>
+                  <button className="eval-button" onClick={handleSubmit}>
+                    Submit Policy for Evaluation
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="score-card">
@@ -108,7 +113,9 @@ const PolicyGovernance = () => {
                   Total Score: {evaluation.totalScore}/100
                 </div>
 
-                <p className="evaluation-summary">{evaluation.evaluationSummary}</p>
+                <p className="evaluation-summary">
+                  {evaluation.evaluationSummary}
+                </p>
 
                 <button className="next-button" onClick={() => navigate("/")}>
                   Return to Home
