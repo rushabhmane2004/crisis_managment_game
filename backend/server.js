@@ -617,6 +617,7 @@ app.post("/api/policy_governance/generate_and_evaluate", authenticateToken, asyn
 
 
 const CRISIS_OLYMPICS_API_KEY = "AIzaSyCHDMNNv6vssGkK5D7_IXWSlpFTD8XVPEQ";
+const CRISIS_OLYMPICS_FALLBACK_KEY = "AIzaSyCHsqtRzl682FdbovevIvLmRVwbNIPuIl4";
 
 const generateCrisisOlympicsQuestions = async () => {
   try {
@@ -634,12 +635,21 @@ D) Option four
 
 Do NOT add headings like 'Scenario', only questions!`;
 
-    const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1/${MODEL_NAME}:generateContent?key=${CRISIS_OLYMPICS_API_KEY}`,
-      {
-        contents: [{ role: "user", parts: [{ text: prompt }] }]
-      }
-    );
+    let response;
+    try {
+      // Try primary API key first
+      response = await axios.post(
+        `https://generativelanguage.googleapis.com/v1/${MODEL_NAME}:generateContent?key=${CRISIS_OLYMPICS_API_KEY}`,
+        { contents: [{ role: "user", parts: [{ text: prompt }] }] }
+      );
+    } catch (primaryError) {
+      console.warn("⚠️ Primary Crisis Olympics API key failed, trying fallback...");
+      // Use fallback API key if primary fails
+      response = await axios.post(
+        `https://generativelanguage.googleapis.com/v1/${MODEL_NAME}:generateContent?key=${CRISIS_OLYMPICS_FALLBACK_KEY}`,
+        { contents: [{ role: "user", parts: [{ text: prompt }] }] }
+      );
+    }
 
     let generatedText = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "";
 
@@ -706,10 +716,13 @@ Do NOT add headings like 'Scenario', only questions!`;
 
 app.post("/api/crisis_olympics/questions", authenticateToken, async (req, res) => {
   try {
-    const aiQuestions = await generateCrisisOlympicsQuestions(); // <<<<<<<<<< 🛠️ This was missing!
+    const aiQuestions = await generateCrisisOlympicsQuestions();
     res.status(200).json(aiQuestions);
   } catch (error) {
-    res.status(500).json({ error: error.message || "Failed to fetch Crisis Olympics questions." });
+    res.status(500).json({ 
+      error: error.message || "Failed to fetch Crisis Olympics questions.",
+      retrySuggestion: "Please try again in a few minutes"
+    });
   }
 });
 
