@@ -45,6 +45,7 @@
 }
 
 .question-block {
+  margin-top: 10vh;
   background-color: #1e293b;
   padding: 2rem;
   border-radius: 8px;

@@ -4,6 +4,7 @@ import { fetchSinglePlayerQuestions } from "./services/aiQuestionService";
 import axios from "axios";
 import "./SinglePlayer.css";
 import "./Multiplayer.css";
+
 const SinglePlayer = () => {
   const navigate = useNavigate();
   const [scenario, setScenario] = useState("");
@@ -13,18 +14,18 @@ const SinglePlayer = () => {
   const [showScore, setShowScore] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [readyToRender, setReadyToRender] = useState(false);
+  const [readyToRender, setReadyToRender] = useState(false); // ✅ new flag
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setReadyToRender(false);
+      setReadyToRender(false); // ✅ avoid rendering prematurely
       try {
         const generated = await fetchSinglePlayerQuestions();
         if (generated.questions?.length > 0) {
           setScenario(generated.scenario || "No scenario available.");
           setQuestions(generated.questions);
-          setReadyToRender(true);
+          setReadyToRender(true); // ✅ render only when fully ready
         }
       } catch (error) {
         console.error("❌ Error fetching questions:", error);
@@ -37,6 +38,7 @@ const SinglePlayer = () => {
 
   const handleAnswer = (option) => {
     if (!option || typeof option.points !== "number") return;
+
     const updated = [...selectedOptions, option.points];
     setSelectedOptions(updated);
 
@@ -72,7 +74,8 @@ const SinglePlayer = () => {
       </header>
 
       <div className="content">
-        {loading || questions.length === 0 ? (
+        {/* ✅ FIXED: Avoid flicker by checking readyToRender */}
+        {loading || !readyToRender ? (
           <p>Loading questions...</p>
         ) : showScore ? (
           <div className="score-container">
@@ -101,7 +104,6 @@ const SinglePlayer = () => {
                 ))}
               </div>
 
-              {/* ✅ Enhanced Timeline */}
               <div className="milestone-timeline">
                 {questions.map((_, index) => (
                   <div
@@ -115,7 +117,6 @@ const SinglePlayer = () => {
                     }`}
                   >
                     <div className="milestone-dot"></div>
-                    
                   </div>
                 ))}
               </div>

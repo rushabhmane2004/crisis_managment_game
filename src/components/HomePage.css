@@ -281,13 +281,13 @@ body {
 
 /* 🔹 Character Box - Positioned Right Next to the Game Name */
 .character-box {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  color: #ffd700;
-  background-color: #1f2937;
+  color: #fcc404;
+  background-color: #000000;
   padding: 6px 16px;
   border-radius: 10px;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px #e0569d;
   display: inline-block;
   margin-left: 15px;  /* Adds space between the game name and the character box */
 }

@@ -401,73 +401,126 @@ app.post("/api/real_world_crisis/questions", authenticateToken, async (req, res)
   }
 });
 
-const POLICY_GOVERNANCE_API_KEY = "AIzaSyC3iTH-O2dASx-tJY7ZbNF_aUmBMwWbu2s"; // You can assign a separate API key if needed
+const PRIMARY_API_KEY = "AIzaSyAj-zEKsAdTtcWaFex3rggFfxLe3gXagxo";
+const FALLBACK_API_KEY = "AIzaSyA1YGTT0-Wef4wMK8rZTMFoAGiapeIRPOY";
+
+// ------------------- Embedding and Cosine Similarity ------------------
+
+const cosineSimilarity = (vecA, vecB) => {
+  const dotProduct = vecA.reduce((acc, val, i) => acc + val * vecB[i], 0);
+  const normA = Math.sqrt(vecA.reduce((acc, val) => acc + val * val, 0));
+  const normB = Math.sqrt(vecB.reduce((acc, val) => acc + val * val, 0));
+  return dotProduct / (normA * normB);
+};
+
+const getEmbedding = async (text) => {
+  const response = await axios.post(
+    `https://generativelanguage.googleapis.com/v1beta2/models/embedding-gecko-001:embedText?key=${PRIMARY_API_KEY}`,
+    { text }
+  );
+  return response.data.embedding.values;
+};
+
+// ------------------- Scenario Generator ------------------
 
 const generatePolicyGovernanceScenario = async () => {
   try {
-    const randomScenario = "You are a policymaker responding to a nationwide water scarcity crisis. Design a new water management policy.";
+    const prompt = `Generate a short, crisp crisis scenario where a policymaker must take action. Limit to 2-3 lines.`;
+    const response = await axios.post(
+      `https://generativelanguage.googleapis.com/v1/${MODEL_NAME}:generateContent?key=${PRIMARY_API_KEY}`,
+      {
+        contents: [{ role: "user", parts: [{ text: prompt }] }]
+      }
+    );
+
+    const scenarioText = response.data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+
+    if (!scenarioText) {
+      throw new Error("Empty scenario generated.");
+    }
 
     return {
-      scenario: randomScenario,
+      scenario: scenarioText,
       wordLimit: 300
     };
   } catch (error) {
-    console.error("❌ Error generating Policy Scenario:", error.message);
-    throw new Error("Failed to generate policy governance scenario.");
+    console.warn("⚠️ Primary scenario generation failed. Switching to fallback key.");
+
+    const prompt = `Generate a short, crisp crisis scenario for policymaker response. Keep it within 2-3 lines.`;
+    const response = await axios.post(
+      `https://generativelanguage.googleapis.com/v1/${MODEL_NAME}:generateContent?key=${FALLBACK_API_KEY}`,
+      {
+        contents: [{ role: "user", parts: [{ text: prompt }] }]
+      }
+    );
+
+    const scenarioText = response.data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+
+    if (!scenarioText) {
+      throw new Error("Fallback scenario also failed.");
+    }
+
+    return {
+      scenario: scenarioText,
+      wordLimit: 300
+    };
   }
 };
 
-const evaluatePolicy = async (policyText) => {
-    try {
-      const prompt = `
-  You are an expert AI trained to assess crisis management policies based on the following criteria:
-  
-  - Risk Mitigation Strategy (0-30 points)
-  - Decision Effectiveness (0-30 points)
-  - Ethical & Social Responsibility (0-20 points)
-  - PASSIONIT-PRUTL Balance (0-20 points)
-  
-  Please read the user's submitted policy below and score them in each category. Provide a brief explanation too.
-  
-  User Policy:
-  "${policyText}"
-  
-  Respond strictly in JSON format like:
-  {
-    "riskMitigationScore": 25,
-    "decisionEffectivenessScore": 27,
-    "ethicalResponsibilityScore": 18,
-    "passionitPrutlScore": 17,
-    "totalScore": 87,
-    "evaluationSummary": "Overall, the policy shows strong risk mitigation and ethical balance."
-  }
-  `;
-  
-      const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1/${MODEL_NAME}:generateContent?key=${POLICY_GOVERNANCE_API_KEY}`,
-        {
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: prompt }]
-            }
-          ]
-        }
-      );
-  
-      let generatedText = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "{}"; // Use let here!
-      console.log("✅ AI Raw Response:\n", generatedText);
-  
-      generatedText = generatedText.replace(/```json|```/g, "").trim(); // Clean Markdown backticks
-  
-      const evaluation = JSON.parse(generatedText); // Parse clean JSON
-      return evaluation;
-    } catch (error) {
-      console.error("❌ AI Policy Evaluation Error:", error.response?.data || error.message);
-      throw new Error("Failed to evaluate the submitted policy.");
+// ------------------- Policy Generator ------------------
+
+const generatePolicyForScenario = async (scenario) => {
+  const prompt = `Create a clear, concise policy (max 300 words) to address the following scenario:\n\n"${scenario}"`;
+
+  const response = await axios.post(
+    `https://generativelanguage.googleapis.com/v1/${MODEL_NAME}:generateContent?key=${PRIMARY_API_KEY}`,
+    {
+      contents: [{ role: "user", parts: [{ text: prompt }] }]
     }
-  };
-  
+  );
+
+  const policy = response.data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+  if (!policy) throw new Error("Policy generation failed.");
+  return policy;
+};
+
+// ------------------- Evaluation ------------------
+
+const evaluatePolicy = async (policyText) => {
+  const prompt = `Evaluate this crisis policy: "${policyText}" and score it on:
+- Risk Mitigation (0-30)
+- Decision Effectiveness (0-30)
+- Ethical & Social Responsibility (0-20)
+- PASSIONIT-PRUTL Balance (0-20)
+
+Respond only in this JSON format:
+{
+  "riskMitigationScore": <number>,
+  "decisionEffectivenessScore": <number>,
+  "ethicalResponsibilityScore": <number>,
+  "passionitPrutlScore": <number>,
+  "totalScore": <number>,
+  "evaluationSummary": "<brief explanation>"
+}`;
+
+  const response = await axios.post(
+    `https://generativelanguage.googleapis.com/v1/${MODEL_NAME}:generateContent?key=${PRIMARY_API_KEY}`,
+    {
+      contents: [{ role: "user", parts: [{ text: prompt }] }]
+    }
+  );
+
+  let text = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+  text = text.replace(/```json|```/g, "").trim();
+  const result = JSON.parse(text);
+  return result;
+};
+
+// ------------------- Middleware ------------------
+
+
+
+// ------------------- Routes ------------------
 
 app.post("/api/policy_governance/questions", authenticateToken, async (req, res) => {
   try {
@@ -481,7 +534,7 @@ app.post("/api/policy_governance/questions", authenticateToken, async (req, res)
 app.post("/api/policy_governance/evaluate", authenticateToken, async (req, res) => {
   const { policyText } = req.body;
   if (!policyText) {
-    return res.status(400).json({ error: "Policy text is required for evaluation." });
+    return res.status(400).json({ error: "Policy text is required." });
   }
 
   try {
@@ -491,6 +544,41 @@ app.post("/api/policy_governance/evaluate", authenticateToken, async (req, res) 
     res.status(500).json({ error: error.message });
   }
 });
+
+app.post("/api/policy_governance/generate_and_evaluate", authenticateToken, async (req, res) => {
+  try {
+    const { scenario } = await generatePolicyGovernanceScenario();
+    const policyText = await generatePolicyForScenario(scenario);
+
+    const [scenarioVec, policyVec] = await Promise.all([
+      getEmbedding(scenario),
+      getEmbedding(policyText)
+    ]);
+
+    const similarity = cosineSimilarity(scenarioVec, policyVec);
+
+    if (similarity < 0.85) {
+      return res.status(400).json({
+        error: "Policy does not align well with the scenario.",
+        similarity
+      });
+    }
+
+    const evaluation = await evaluatePolicy(policyText);
+
+    res.status(200).json({
+      scenario,
+      policyText,
+      similarity: similarity.toFixed(3),
+      evaluation
+    });
+
+  } catch (error) {
+    console.error("❌ Error:", error.message);
+    res.status(500).json({ error: "Internal error during policy evaluation." });
+  }
+});
+
 
 const CRISIS_OLYMPICS_API_KEY = "AIzaSyCHDMNNv6vssGkK5D7_IXWSlpFTD8XVPEQ";
 
