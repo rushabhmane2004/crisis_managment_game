@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchAiVsCrisisQuestions } from "./services/aiQuestionService";
-import axios from "axios";
 import "./Multiplayer.css"; // ✅ Reuse same styling
 
 const AIVsHuman = () => {
@@ -105,28 +104,30 @@ const AIVsHuman = () => {
             <h2 className="scenario-text">{scenario}</h2>
             <div className="timer">Time Left: {timer}s</div>
 
-            <div className="score-bar">
-              <div className="human-score" style={{ width: `${(humanScore / 100) * 100}%` }}>You: {humanScore}</div>
-              <div className="ai-score" style={{ width: `${(aiScore / 100) * 100}%` }}>AI: {aiScore}</div>
-            </div>
+            <div className="question-layout">
+              <div className="question-block">
+                <h3 className="question-text">
+                  {questions[currentQuestionIndex]?.question
+                    ?.replace(/\*\*/g, "")
+                    .trim()}
+                </h3>
 
-            <div className="question-block">
-              <h3 className="question-text">
-                {questions[currentQuestionIndex]?.question
-                  ?.replace(/\*\*/g, "")
-                  .trim()}
-              </h3>
+                <div className="options-container">
+                  {questions[currentQuestionIndex]?.options?.map((opt, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleAnswer(opt)}
+                      className="option-button"
+                    >
+                      {opt.text || "Option"}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-              <div className="options-container">
-                {questions[currentQuestionIndex]?.options?.map((opt, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleAnswer(opt)}
-                    className="option-button"
-                  >
-                    {opt.text || "Option"}
-                  </button>
-                ))}
+              <div className="side-score-boxes">
+                <div className="mini-score human-mini">🧑 You: {humanScore}</div>
+                <div className="mini-score ai-mini">🤖 AI: {aiScore}</div>
               </div>
             </div>
           </>

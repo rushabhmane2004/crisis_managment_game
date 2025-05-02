@@ -66,3 +66,72 @@
   background-color: #f44336; /* Red for AI score */
   color: white;
 }
+
+/* New Score Box Style */
+.score-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1rem 0 2rem;
+}
+
+.score-card {
+  background: #1e1e2f;
+  padding: 1.2rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  font-size: 1.2rem;
+  font-weight: bold;
+  min-width: 120px;
+  text-align: center;
+  border: 2px solid #333;
+  color: white;
+}
+
+.human-card {
+  border-color: #2196f3;
+  background-color: #102a43;
+}
+
+.ai-card {
+  border-color: #f44336;
+  background-color: #3a1a1a;
+}
+/* Layout container for question + score boxes */
+.question-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding: 0 2rem;
+  flex-wrap: wrap;
+}
+
+/* Small Side Score Boxes */
+.side-score-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  top: 0;
+}
+
+.mini-score {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  min-width: 110px;
+  text-align: center;
+}
+
+.human-mini {
+  background-color: #2196f3;
+}
+
+.ai-mini {
+  background-color: #f44336;
+}
